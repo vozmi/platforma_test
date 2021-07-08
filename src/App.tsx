@@ -1,12 +1,16 @@
 import React from 'react';
 import './App.css';
 import 'devextreme/dist/css/dx.light.css';
+import { Switch, Route } from 'react-router-dom';
+import Home from './pages/home/Home';
 
 function App() {
   return (
-    <div className="App">
-      Hello World!
-    </div>
+    <Switch>
+      <Route>
+        <Home />
+      </Route>
+    </Switch>
   );
 }
 
