@@ -4,7 +4,7 @@ import { Employee, EmployeeName } from './types';
 
 export interface Column {
   id: number
-  type: 'hidden' | 'visible'
+  type: 'active' | 'disable'
   props: IColumnProps
 }
 
@@ -22,23 +22,25 @@ const reportViewSlice = createSlice({
   name: 'reportView',
   initialState,
   reducers: {
-    setColumns(state, action: PayloadAction<Array<IColumnProps>>) {
-      state.columns = action.payload.map((columnProps, i) => {
+    addColumns(state, action: PayloadAction<{columns: Array<IColumnProps>, type: 'active' | 'disable'}>) {
+      const lastId = state.columns ? state.columns[state.columns.length - 1].id : 0;
+      const newColumns: Array<Column> = action.payload.columns.map((columnProps, i) => {
         const column: Column = {
-          id: i,
-          type: 'hidden',
+          id: lastId + i,
+          type: action.payload.type,
           props: columnProps,
         };
         return column;
       });
+      if (state.columns) state.columns.push(...newColumns);
+      else state.columns = newColumns;
     },
     setEmployees(state, action: PayloadAction<Array<Employee>>) {
       state.employees = action.payload;
     },
     changeColumnName(state, action: PayloadAction<{prevName: EmployeeName, newName: string}>) {
-      if (state.employees && state.columns) {
-        const { prevName, newName } = action.payload;
-
+      const { prevName, newName } = action.payload;
+      if (state.employees && state.columns && (prevName !== newName)) {
         const employeesResult = state.employees.map((employee) => {
           const result = {
             ...employee,
@@ -48,25 +50,42 @@ const reportViewSlice = createSlice({
           return result;
         });
 
-        const columnsResult = state.columns.map((column) => ({
-          ...column,
-          props: {
-            ...column.props,
-            dataField: newName,
-          },
-        }));
+        const columnsResult = state.columns.map((column) => {
+          if (column.props?.dataField === prevName) {
+            return {
+              ...column,
+              props: {
+                ...column.props,
+                dataField: newName,
+              },
+            };
+          }
+          return column;
+        });
 
         state.employees = employeesResult;
         state.columns = columnsResult;
       }
     },
+    changeColumnType(state, action: PayloadAction<{ id: number, type: 'active' | 'disable'}>) {
+      state.columns = state.columns?.map((column) => {
+        if (column.id === action.payload.id) {
+          return {
+            ...column,
+            type: action.payload.type,
+          };
+        }
+        return column;
+      });
+    },
   },
 });
 
 export const {
-  setColumns,
+  addColumns,
   setEmployees,
   changeColumnName,
+  changeColumnType,
 } = reportViewSlice.actions;
 
 export default reportViewSlice.reducer;

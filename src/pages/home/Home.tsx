@@ -6,6 +6,7 @@ const Home: React.FC = () => {
   const employees = data.getEmployees();
   return (
     <div>
+      <h2>Report View:</h2>
       <ReportView employees={employees} />
     </div>
   );
