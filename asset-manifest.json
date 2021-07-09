@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/elfsight_test/static/css/main.21c450b0.chunk.css",
-    "main.js": "/elfsight_test/static/js/main.a7c606d1.chunk.js",
-    "main.js.map": "/elfsight_test/static/js/main.a7c606d1.chunk.js.map",
-    "runtime-main.js": "/elfsight_test/static/js/runtime-main.62117b41.js",
-    "runtime-main.js.map": "/elfsight_test/static/js/runtime-main.62117b41.js.map",
-    "static/css/2.91cdbb27.chunk.css": "/elfsight_test/static/css/2.91cdbb27.chunk.css",
-    "static/js/2.424761ef.chunk.js": "/elfsight_test/static/js/2.424761ef.chunk.js",
-    "static/js/2.424761ef.chunk.js.map": "/elfsight_test/static/js/2.424761ef.chunk.js.map",
-    "index.html": "/elfsight_test/index.html",
-    "static/css/2.91cdbb27.chunk.css.map": "/elfsight_test/static/css/2.91cdbb27.chunk.css.map",
-    "static/css/main.21c450b0.chunk.css.map": "/elfsight_test/static/css/main.21c450b0.chunk.css.map",
-    "static/js/2.424761ef.chunk.js.LICENSE.txt": "/elfsight_test/static/js/2.424761ef.chunk.js.LICENSE.txt",
-    "static/media/dx.light.css": "/elfsight_test/static/media/dxicons.d8b3a23c.ttf"
+    "main.css": "/platforma_test/static/css/main.21c450b0.chunk.css",
+    "main.js": "/platforma_test/static/js/main.a7c606d1.chunk.js",
+    "main.js.map": "/platforma_test/static/js/main.a7c606d1.chunk.js.map",
+    "runtime-main.js": "/platforma_test/static/js/runtime-main.4e1f0679.js",
+    "runtime-main.js.map": "/platforma_test/static/js/runtime-main.4e1f0679.js.map",
+    "static/css/2.e9cdff0e.chunk.css": "/platforma_test/static/css/2.e9cdff0e.chunk.css",
+    "static/js/2.424761ef.chunk.js": "/platforma_test/static/js/2.424761ef.chunk.js",
+    "static/js/2.424761ef.chunk.js.map": "/platforma_test/static/js/2.424761ef.chunk.js.map",
+    "index.html": "/platforma_test/index.html",
+    "static/css/2.e9cdff0e.chunk.css.map": "/platforma_test/static/css/2.e9cdff0e.chunk.css.map",
+    "static/css/main.21c450b0.chunk.css.map": "/platforma_test/static/css/main.21c450b0.chunk.css.map",
+    "static/js/2.424761ef.chunk.js.LICENSE.txt": "/platforma_test/static/js/2.424761ef.chunk.js.LICENSE.txt",
+    "static/media/dx.light.css": "/platforma_test/static/media/dxicons.d8b3a23c.ttf"
   },
   "entrypoints": [
-    "static/js/runtime-main.62117b41.js",
-    "static/css/2.91cdbb27.chunk.css",
+    "static/js/runtime-main.4e1f0679.js",
+    "static/css/2.e9cdff0e.chunk.css",
     "static/js/2.424761ef.chunk.js",
     "static/css/main.21c450b0.chunk.css",
     "static/js/main.a7c606d1.chunk.js"
