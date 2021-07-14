@@ -17,11 +17,14 @@ export interface Employee {
   MobilePhone: string,
 }
 
-export type EmployeeName = 'ID' | 'FirstName' |
-  'LastName' | 'Position' |
-  'BirthDate' | 'HireDate' |
-  'Title' | 'Address' |
-  'City' | 'State' |
-  'Zipcode' | 'Email' |
-  'Skype' | 'HomePhone' |
-  'DepartmentID' | 'MobilePhone';
+interface Column {
+  dataField: string
+  caption?: string
+  dataType?: string
+  format?: string
+  alignment?: string
+}
+
+export interface ReportConfig {
+  columns: Array<Column>
+}

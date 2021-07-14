@@ -7,8 +7,6 @@ import ColumnAdd from './atoms/ColumnAdd';
 
 const ReportEditor: React.FC = () => {
   const columns = useSelector(columnsSelector);
-  // eslint-disable-next-line no-unused-vars
-  const disabledColumns = columns?.filter((column: Column) => column.type === 'disable');
   const activeColumns = columns?.filter((column: Column) => column.type === 'active');
 
   return (

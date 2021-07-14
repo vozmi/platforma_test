@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IColumnProps } from 'devextreme-react/data-grid';
-import { Employee, EmployeeName } from './types';
 
 export interface Column {
   id: number
@@ -10,12 +9,12 @@ export interface Column {
 
 interface IS {
   columns: Array<Column> | undefined
-  employees: Array<Employee> | undefined
+  data: Array<{[index: string]:any}> | undefined
 }
 
 const initialState: IS = {
   columns: undefined,
-  employees: undefined,
+  data: undefined,
 };
 
 const reportViewSlice = createSlice({
@@ -23,7 +22,8 @@ const reportViewSlice = createSlice({
   initialState,
   reducers: {
     addColumns(state, action: PayloadAction<{columns: Array<IColumnProps>, type: 'active' | 'disable'}>) {
-      const lastId = state.columns ? state.columns[state.columns.length - 1].id : 0;
+      const lastId = (state.columns && state.columns.length !== 0)
+        ? state.columns[state.columns.length - 1].id : 0;
       const newColumns: Array<Column> = action.payload.columns.map((columnProps, i) => {
         const column: Column = {
           id: lastId + i,
@@ -35,16 +35,16 @@ const reportViewSlice = createSlice({
       if (state.columns) state.columns.push(...newColumns);
       else state.columns = newColumns;
     },
-    setEmployees(state, action: PayloadAction<Array<Employee>>) {
-      state.employees = action.payload;
+    setData(state, action: PayloadAction<Array<{}>>) {
+      state.data = action.payload;
     },
-    changeColumnName(state, action: PayloadAction<{prevName: EmployeeName, newName: string}>) {
+    changeColumnName(state, action: PayloadAction<{prevName: string, newName: string}>) {
       const { prevName, newName } = action.payload;
-      if (state.employees && state.columns && (prevName !== newName)) {
-        const employeesResult = state.employees.map((employee) => {
+      if (state.data && state.columns && (prevName !== newName) && prevName) {
+        const dataResult = state.data.map((item) => {
           const result = {
-            ...employee,
-            [newName]: employee[prevName],
+            ...item,
+            [newName]: item[prevName],
           };
           delete result[prevName];
           return result;
@@ -63,7 +63,7 @@ const reportViewSlice = createSlice({
           return column;
         });
 
-        state.employees = employeesResult;
+        state.data = dataResult;
         state.columns = columnsResult;
       }
     },
@@ -83,7 +83,7 @@ const reportViewSlice = createSlice({
 
 export const {
   addColumns,
-  setEmployees,
+  setData,
   changeColumnName,
   changeColumnType,
 } = reportViewSlice.actions;

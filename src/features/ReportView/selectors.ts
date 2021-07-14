@@ -10,4 +10,4 @@ export const disabledColumnsSelector = createSelector(
   columnsSelector,
   (columns) => columns?.filter((column) => column.type === 'disable'),
 );
-export const employeesSelector = (state: RootState) => state.reportView.employees;
+export const dataSelector = (state: RootState) => state.reportView.data;

@@ -1,76 +1,68 @@
 import React, { useEffect } from 'react';
 import { DataGrid } from 'devextreme-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Column, ColumnFixing } from 'devextreme-react/data-grid';
+import { Column } from 'devextreme-react/data-grid';
 import ReportEditor from './components/ReportEditor';
 import s from './index.module.css';
-import { activeColumnsSelector, employeesSelector } from './selectors';
-import { Employee } from './types';
-import { addColumns, setEmployees } from './reducer';
+import { activeColumnsSelector, dataSelector } from './selectors';
+import { ReportConfig } from './types';
+import { addColumns, setData } from './reducer';
 
 interface Props {
-  employees: Array<Employee>
+  config: ReportConfig
+  data: Array<object>
 }
 
 const ReportView: React.FC<Props> = (props: Props) => {
   const dispatch = useDispatch();
   const activeColumns = useSelector(activeColumnsSelector);
-  const employees = useSelector(employeesSelector);
-  const { employees: initEmployees } = props;
+  const { config, data: propsData } = props;
+  const data = useSelector(dataSelector);
 
   useEffect(() => {
-    if (initEmployees) {
-      const employeeExampleKeys = Object.keys(initEmployees[0]);
-      const initColumns = [
-        {
-          dataField: employeeExampleKeys[3],
-        },
-        {
-          dataField: employeeExampleKeys[4],
-        },
-        {
-          dataField: employeeExampleKeys[5],
-        },
-        {
-          dataField: employeeExampleKeys[6],
-        },
-      ];
-      dispatch(addColumns({ columns: initColumns, type: 'active' }));
+    dispatch(setData(propsData));
+  }, []);
 
-      const disabledColumns = [];
-      for (let i = 7; i < employeeExampleKeys.length; i += 1) {
-        disabledColumns.push({
-          dataField: employeeExampleKeys[i],
-        });
-      }
-      dispatch(addColumns({
-        columns: disabledColumns,
-        type: 'disable',
-      }));
-      dispatch(setEmployees(props.employees));
+  useEffect(() => {
+    if (config) {
+      dispatch(addColumns({ columns: config.columns, type: 'active' }));
     }
-  }, [initEmployees]);
+  }, [config]);
+
+  useEffect(() => {
+    if (data) {
+      const dataFields = Object.keys(data[0]);
+      const columns = dataFields.map((dataField) => ({
+        dataField,
+      }))
+        .filter((column) => { // remove active columns from config
+          if (config) {
+            for (let i = 0; i < config.columns.length; i += 1) {
+              const configColumn = config.columns[i];
+              if (configColumn.dataField === column.dataField) {
+                return false;
+              }
+            }
+          }
+          return true;
+        });
+      dispatch(addColumns({ columns, type: 'disable' }));
+    }
+  }, [data]);
 
   return (
     <div className={s.wrapper}>
       <DataGrid
         id="reportView"
         keyExpr="ID"
-        dataSource={employees}
+        dataSource={(activeColumns && activeColumns.length !== 0) ? data : undefined}
         style={{ height: '440px', overflowX: 'scroll' }}
         allowColumnReordering
         allowColumnResizing
         columnAutoWidth
         showBorders
       >
-        <ColumnFixing enabled />
-        <Column
-          caption="Employee"
-          width={230}
-          fixed
-          calculateCellValue={(employee: Employee) => `${employee.FirstName} ${employee.LastName}`}
-        />
-        {activeColumns ? activeColumns.map((column) => (
+        {(activeColumns && activeColumns.length !== 0) ? activeColumns.map((column) => (
           <Column
             key={column.id}
             {...column.props}

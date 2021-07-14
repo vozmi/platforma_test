@@ -1,62 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { changeColumnName, changeColumnType, Column } from '../../../reducer';
-
-type CSSProp = React.CSSProperties;
-
-const columnEdit = {
-  wrapper: {
-    display: 'grid',
-    gridTemplateColumns: '4fr 1fr 1fr',
-    alignItems: 'center',
-    marginBottom: '1rem',
-  } as CSSProp,
-  input: {
-    display: 'inline-block',
-    borderRadius: '5px',
-    padding: '4px',
-    border: '1px solid darkgray',
-  } as CSSProp,
-  icon: {
-    display: 'inline-block',
-    height: '1rem',
-    cursor: 'pointer',
-  } as CSSProp,
-  buttonClear: {
-    display: 'inline-block',
-    justifySelf: 'center',
-    height: '1rem',
-    cursor: 'pointer',
-    border: 0,
-    padding: 0,
-    backgroundColor: 'inherit',
-  } as CSSProp,
-  closeBtn: {
-    display: 'flex',
-    justifySelf: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '25px',
-    width: '25px',
-    padding: '4px',
-    border: '1px solid darkgray',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    backgroundColor: 'inherit',
-  } as CSSProp,
-  submitBtn: {
-    display: 'flex',
-    justifySelf: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '25px',
-    width: '25px',
-    padding: 0,
-    border: 0,
-    cursor: 'pointer',
-    backgroundColor: 'inherit',
-  } as CSSProp,
-};
+import columnEdit from './columnEdit.module.css';
 
 interface ColumnInfoProps {
   dataField: string,
@@ -67,26 +12,26 @@ interface ColumnInfoProps {
 const ColumnInfo: React.FC<ColumnInfoProps> = (props: ColumnInfoProps) => {
   const { dataField, onDelete, onEdit } = props;
   return (
-    <div style={columnEdit.wrapper}>
+    <div className={columnEdit.wrapper}>
       <span>{dataField}</span>
       <button
-        style={columnEdit.buttonClear}
+        className={columnEdit.buttonClear}
         type="button"
         onMouseDown={onDelete}
       >
         <img
-          style={columnEdit.icon}
+          className={columnEdit.icon}
           src="https://image.flaticon.com/icons/png/512/3096/3096687.png"
           alt="Delete"
         />
       </button>
       <button
-        style={columnEdit.buttonClear}
+        className={columnEdit.buttonClear}
         type="button"
         onMouseDown={onEdit}
       >
         <img
-          style={columnEdit.icon}
+          className={columnEdit.icon}
           src="https://image.flaticon.com/icons/png/512/1827/1827933.png"
           alt="Edit"
         />
@@ -136,11 +81,11 @@ const ColumnEdit: React.FC<Column> = (column: Column) => {
     <>
       {
         isEdit ? (
-          <div style={columnEdit.wrapper}>
+          <div className={columnEdit.wrapper}>
             <input
               name="columnName"
               type="text"
-              style={columnEdit.input}
+              className={columnEdit.input}
               value={inputValue}
               ref={inputRef as React.RefObject<HTMLInputElement>}
               onBlur={() => setIsEdit(false)}
@@ -157,19 +102,19 @@ const ColumnEdit: React.FC<Column> = (column: Column) => {
               }}
             />
             <button
-              style={columnEdit.submitBtn}
+              className={columnEdit.submitBtn}
               type="button"
               onMouseDown={() => onNameEdit(inputValue)}
             >
               <img
-                style={columnEdit.icon}
+                className={columnEdit.icon}
                 src="https://image.flaticon.com/icons/png/512/992/992650.png"
                 alt="Submit"
               />
             </button>
             <button
               type="button"
-              style={columnEdit.closeBtn}
+              className={columnEdit.closeBtn}
               onMouseDown={onNameEditCancel}
             >
               <span style={{ lineHeight: '1rem' }}>x</span>
