@@ -26,7 +26,7 @@ const reportViewSlice = createSlice({
         ? state.columns[state.columns.length - 1].id : 0;
       const newColumns: Array<Column> = action.payload.columns.map((columnProps, i) => {
         const column: Column = {
-          id: lastId + i,
+          id: lastId + 1 + i,
           type: action.payload.type,
           props: columnProps,
         };
